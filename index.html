@@ -38,129 +38,110 @@
     </script>
     <style>
       :where([class^="ri-"])::before { content: "\f3c2"; }
-
       @keyframes fadeIn {
-          from { opacity: 0; }
-          to { opacity: 1; }
+      from { opacity: 0; }
+      to { opacity: 1; }
       }
-
       @keyframes fadeOut {
-          from { opacity: 1; }
-          to { opacity: 0; }
+      from { opacity: 1; }
+      to { opacity: 0; }
       }
-
       @keyframes pulse {
-          0% { transform: scale(1); }
-          50% { transform: scale(1.05); }
-          100% { transform: scale(1); }
+      0% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+      100% { transform: scale(1); }
       }
-
       @keyframes progressBar {
-          from { width: 0; }
-          to { width: 100%; }
+      from { width: 0; }
+      to { width: 100%; }
       }
-
       .preloader {
-          position: fixed;
-          top: 0;
-          left: 0;
-          width: 100%;
-          height: 100%;
-          background: linear-gradient(135deg, #f5f7fa 0%, #eef1f5 100%);
-          display: flex;
-          flex-direction: column;
-          align-items: center;
-          justify-content: center;
-          z-index: 9999;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg, #f5f7fa 0%, #eef1f5 100%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      z-index: 9999;
       }
-
       .preloader.hidden {
-          animation: fadeOut 0.5s forwards;
-          pointer-events: none;
+      animation: fadeOut 0.5s forwards;
+      pointer-events: none;
       }
-
       .progress-bar {
-          width: 200px;
-          height: 4px;
-          background-color: rgba(139, 92, 246, 0.2);
-          border-radius: 2px;
-          margin-top: 20px;
-          overflow: hidden;
+      width: 200px;
+      height: 4px;
+      background-color: rgba(139, 92, 246, 0.2);
+      border-radius: 2px;
+      margin-top: 20px;
+      overflow: hidden;
       }
-
       .progress {
-          height: 100%;
-          background-color: #8B5CF6;
-          animation: progressBar 10s linear forwards;
+      height: 100%;
+      background-color: #8B5CF6;
+      animation: progressBar 10s linear forwards;
       }
-
       .content {
-          opacity: 0;
+      opacity: 0;
       }
-
       .content.visible {
-          animation: fadeIn 0.5s forwards;
+      animation: fadeIn 0.5s forwards;
       }
-
       .tracker-card:hover {
-          transform: translateY(-5px);
-          box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+      transform: translateY(-5px);
+      box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
       }
-
       .header {
-          transition: background-color 0.3s ease;
+      transition: background-color 0.3s ease;
       }
-
       .header.scrolled {
-          background-color: white;
-          box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+      background-color: white;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
       }
-
       .nav-link {
-          position: relative;
+      position: relative;
       }
-
       .nav-link::after {
-          content: '';
-          position: absolute;
-          bottom: -4px;
-          left: 0;
-          width: 0;
-          height: 2px;
-          background-color: #8B5CF6;
-          transition: width 0.3s ease;
+      content: '';
+      position: absolute;
+      bottom: -4px;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background-color: #8B5CF6;
+      transition: width 0.3s ease;
       }
-
       .nav-link:hover::after {
-          width: 100%;
+      width: 100%;
       }
-
       .custom-checkbox {
-          appearance: none;
-          -webkit-appearance: none;
-          width: 20px;
-          height: 20px;
-          border: 2px solid #8B5CF6;
-          border-radius: 4px;
-          outline: none;
-          cursor: pointer;
-          position: relative;
+      appearance: none;
+      -webkit-appearance: none;
+      width: 20px;
+      height: 20px;
+      border: 2px solid #8B5CF6;
+      border-radius: 4px;
+      outline: none;
+      cursor: pointer;
+      position: relative;
       }
-
       .custom-checkbox:checked {
-          background-color: #8B5CF6;
+      background-color: #8B5CF6;
       }
-
       .custom-checkbox:checked::after {
-          content: '';
-          position: absolute;
-          top: 2px;
-          left: 6px;
-          width: 5px;
-          height: 10px;
-          border: solid white;
-          border-width: 0 2px 2px 0;
-          transform: rotate(45deg);
+      content: '';
+      position: absolute;
+      top: 2px;
+      left: 6px;
+      width: 5px;
+      height: 10px;
+      border: solid white;
+      border-width: 0 2px 2px 0;
+      transform: rotate(45deg);
       }
     </style>
   </head>
@@ -175,14 +156,12 @@
         <div class="progress"></div>
       </div>
     </div>
-
     <!-- Main Content -->
     <div class="content">
       <!-- Header -->
       <header class="header fixed w-full z-50 px-6 py-4">
         <div class="container mx-auto flex justify-between items-center">
           <a href="#" class="text-3xl font-['Pacifico'] text-primary">Klto</a>
-
           <nav class="hidden md:flex items-center space-x-8">
             <a
               href="#features"
@@ -205,7 +184,6 @@
               >Pricing</a
             >
           </nav>
-
           <div class="flex items-center space-x-4">
             <a
               href="#"
@@ -217,7 +195,6 @@
               class="px-4 py-2 bg-primary text-white !rounded-button hover:bg-primary/90 transition-colors whitespace-nowrap"
               >Sign Up</a
             >
-
             <button
               class="md:hidden w-10 h-10 flex items-center justify-center text-gray-700"
             >
@@ -226,43 +203,85 @@
           </div>
         </div>
       </header>
-
       <!-- Hero Section -->
       <section
-        class="relative pt-24 overflow-hidden"
-        style="background-image: url('https://img.freepik.com/premium-photo/person-standing-front-pink-background-with-pink-background_1161356-183206.jpg'); background-size: cover; background-position: center right;"
+        class="relative pt-24 overflow-hidden bg-gradient-to-br from-rose-50 to-white"
       >
-        <div class="container mx-auto px-6 py-24 md:py-32">
-          <div class="w-full max-w-xl">
-            <h1
-              class="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 leading-tight text-gray-900"
+        <div
+          class="absolute inset-0 bg-[url('https://readdy.ai/api/search-image?query=A%20serene%20and%20elegant%20lifestyle%20scene%20with%20soft%20pastel%20colors%2C%20featuring%20delicate%20floral%20elements%2C%20a%20minimalist%20desk%20setup%20with%20a%20rose%20gold%20laptop%2C%20planner%2C%20and%20wellness%20items.%20The%20composition%20includes%20gentle%20morning%20light%2C%20creating%20a%20peaceful%20and%20feminine%20atmosphere%20with%20blush%20pink%20and%20lavender%20accents.%20The%20scene%20maintains%20a%20clean%2C%20uncluttered%20aesthetic%20perfect%20for%20a%20wellness%20and%20lifestyle%20brand.&width=1920&height=1080&seq=hero_new&orientation=landscape')] bg-cover bg-center opacity-15"
+        ></div>
+        <div class="container mx-auto px-6 py-24 md:py-32 relative">
+          <div class="max-w-3xl mx-auto text-center">
+            <div
+              class="inline-flex items-center px-4 py-2 bg-primary/10 rounded-full text-primary text-sm font-medium mb-6 mx-auto"
             >
-              Track Your Life Journey with Elegance
+              <i class="ri-heart-line mr-2"></i> Your Personal Wellness Journey
+            </div>
+            <h1
+              class="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 leading-tight"
+            >
+              Embrace a More
+              <span
+                class="bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent"
+                >Mindful Life</span
+              >
             </h1>
-            <p class="text-lg md:text-xl text-gray-700 mb-8">
-              Klto helps you monitor what matters most - from periods and
-              expenses to screen time and personal goals - all in one
-              beautifully designed app.
+            <p class="text-lg md:text-xl text-gray-600 mb-8 leading-relaxed">
+              Track your wellness journey with grace and intention. Discover
+              patterns, celebrate progress, and nurture your daily rhythms with
+              our thoughtfully designed tracking companion.
             </p>
-            <div class="flex flex-col sm:flex-row gap-4">
+            <div class="flex flex-col sm:flex-row gap-4 mb-8 justify-center">
               <a
                 href="#"
-                class="px-8 py-3 bg-primary text-white text-lg !rounded-button hover:bg-primary/90 transition-colors whitespace-nowrap text-center"
-                >Start Tracking Free</a
+                class="group px-8 py-4 bg-primary text-white text-lg !rounded-button hover:bg-primary/90 transition-all duration-300 flex items-center justify-center whitespace-nowrap shadow-lg shadow-primary/20"
               >
+                Begin Your Journey
+                <i
+                  class="ri-butterfly-line ml-2 transform group-hover:translate-x-1 transition-transform"
+                ></i>
+              </a>
               <a
-                href="#features"
-                class="px-8 py-3 border border-gray-300 text-gray-700 text-lg !rounded-button hover:bg-gray-50 transition-colors whitespace-nowrap text-center"
-                >Learn More</a
+                href="#demo"
+                class="group px-8 py-4 bg-white/80 backdrop-blur-sm text-gray-700 text-lg !rounded-button border border-primary/20 hover:bg-white hover:border-primary/40 transition-all duration-300 flex items-center justify-center whitespace-nowrap"
               >
+                <i class="ri-sparkling-line mr-2"></i>
+                See the Magic
+              </a>
+            </div>
+            <div class="flex items-center gap-6 justify-center">
+              <div class="flex -space-x-3">
+                <div
+                  class="w-10 h-10 rounded-full border-2 border-white bg-primary/10 flex items-center justify-center"
+                >
+                  <i class="ri-user-heart-line text-primary"></i>
+                </div>
+                <div
+                  class="w-10 h-10 rounded-full border-2 border-white bg-primary/10 flex items-center justify-center"
+                >
+                  <i class="ri-user-heart-line text-primary"></i>
+                </div>
+                <div
+                  class="w-10 h-10 rounded-full border-2 border-white bg-primary/10 flex items-center justify-center"
+                >
+                  <i class="ri-user-heart-line text-primary"></i>
+                </div>
+              </div>
+              <div>
+                <div class="font-semibold text-gray-900">
+                  Join 10K+ Mindful Women
+                </div>
+                <div class="text-sm text-gray-500">
+                  In our supportive community
+                </div>
+              </div>
             </div>
           </div>
         </div>
         <div
-          class="absolute bottom-0 left-0 w-full h-16 bg-gradient-to-t from-white to-transparent"
+          class="absolute bottom-0 left-0 w-full h-24 bg-gradient-to-t from-white to-transparent"
         ></div>
       </section>
-
       <!-- Trackers Showcase -->
       <section id="trackers" class="py-20 bg-white">
         <div class="container mx-auto px-6">
@@ -275,7 +294,6 @@
               beautifully organized in one place.
             </p>
           </div>
-
           <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             <!-- Period Tracker -->
             <div
@@ -293,7 +311,6 @@
                 health.
               </p>
             </div>
-
             <!-- Expenditure Tracker -->
             <div
               class="tracker-card bg-white rounded-lg p-6 border border-gray-100 shadow-sm hover:shadow-md transition-all duration-300"
@@ -309,7 +326,6 @@
                 financial health with easy-to-understand charts and reports.
               </p>
             </div>
-
             <!-- Screen Time Tracker -->
             <div
               class="tracker-card bg-white rounded-lg p-6 border border-gray-100 shadow-sm hover:shadow-md transition-all duration-300"
@@ -325,7 +341,6 @@
                 analytics. Set healthy limits and reduce digital distractions.
               </p>
             </div>
-
             <!-- Working Tracker -->
             <div
               class="tracker-card bg-white rounded-lg p-6 border border-gray-100 shadow-sm hover:shadow-md transition-all duration-300"
@@ -341,7 +356,6 @@
                 most productive times and optimize your work schedule.
               </p>
             </div>
-
             <!-- Travel Tracker -->
             <div
               class="tracker-card bg-white rounded-lg p-6 border border-gray-100 shadow-sm hover:shadow-md transition-all duration-300"
@@ -357,7 +371,6 @@
                 adventures. Keep all your travel information organized.
               </p>
             </div>
-
             <!-- Study Tracker -->
             <div
               class="tracker-card bg-white rounded-lg p-6 border border-gray-100 shadow-sm hover:shadow-md transition-all duration-300"
@@ -373,7 +386,6 @@
                 goals. Stay motivated with achievement milestones.
               </p>
             </div>
-
             <!-- Notes -->
             <div
               class="tracker-card bg-white rounded-lg p-6 border border-gray-100 shadow-sm hover:shadow-md transition-all duration-300"
@@ -389,7 +401,6 @@
                 place. Organize with tags and search with ease.
               </p>
             </div>
-
             <!-- To-Do List -->
             <div
               class="tracker-card bg-white rounded-lg p-6 border border-gray-100 shadow-sm hover:shadow-md transition-all duration-300"
@@ -405,7 +416,6 @@
                 priorities, deadlines, and track your progress.
               </p>
             </div>
-
             <!-- Diary -->
             <div
               class="tracker-card bg-white rounded-lg p-6 border border-gray-100 shadow-sm hover:shadow-md transition-all duration-300"
@@ -424,7 +434,6 @@
           </div>
         </div>
       </section>
-
       <!-- Features Section -->
       <section id="features" class="py-20 bg-gray-50">
         <div class="container mx-auto px-6">
@@ -435,7 +444,6 @@
               life.
             </p>
           </div>
-
           <!-- Feature 1 -->
           <div class="flex flex-col md:flex-row items-center mb-20">
             <div class="md:w-1/2 md:pr-12 mb-8 md:mb-0">
@@ -480,7 +488,6 @@
               />
             </div>
           </div>
-
           <!-- Feature 2 -->
           <div class="flex flex-col md:flex-row-reverse items-center mb-20">
             <div class="md:w-1/2 md:pl-12 mb-8 md:mb-0">
@@ -527,7 +534,6 @@
               />
             </div>
           </div>
-
           <!-- Feature 3 -->
           <div class="flex flex-col md:flex-row items-center">
             <div class="md:w-1/2 md:pr-12 mb-8 md:mb-0">
@@ -576,7 +582,6 @@
           </div>
         </div>
       </section>
-
       <!-- Testimonials Section -->
       <section id="testimonials" class="py-20 bg-white">
         <div class="container mx-auto px-6">
@@ -589,7 +594,6 @@
               Klto.
             </p>
           </div>
-
           <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             <!-- Testimonial 1 -->
             <div
@@ -622,7 +626,6 @@
                 </div>
               </div>
             </div>
-
             <!-- Testimonial 2 -->
             <div
               class="bg-white rounded-lg p-6 shadow-sm border border-gray-100"
@@ -654,7 +657,6 @@
                 </div>
               </div>
             </div>
-
             <!-- Testimonial 3 -->
             <div
               class="bg-white rounded-lg p-6 shadow-sm border border-gray-100"
@@ -687,7 +689,6 @@
               </div>
             </div>
           </div>
-
           <!-- App Store Ratings -->
           <div
             class="mt-16 flex flex-col md:flex-row items-center justify-center gap-8 md:gap-16"
@@ -704,7 +705,6 @@
               <p class="text-gray-600">App Store</p>
               <p class="text-sm text-gray-500">12,000+ reviews</p>
             </div>
-
             <div class="text-center">
               <div class="text-4xl font-bold text-primary mb-2">4.7</div>
               <div class="flex justify-center text-primary mb-2">
@@ -717,7 +717,6 @@
               <p class="text-gray-600">Google Play</p>
               <p class="text-sm text-gray-500">9,500+ reviews</p>
             </div>
-
             <div class="text-center">
               <div class="text-4xl font-bold text-primary mb-2">98%</div>
               <div class="flex justify-center text-primary mb-2">
@@ -727,7 +726,6 @@
               <p class="text-sm text-gray-500">Based on surveys</p>
             </div>
           </div>
-
           <!-- Featured In -->
           <div class="mt-16">
             <p class="text-center text-gray-500 mb-8">Featured In</p>
@@ -754,7 +752,6 @@
           </div>
         </div>
       </section>
-
       <!-- Pricing Section -->
       <section id="pricing" class="py-20 bg-gray-50">
         <div class="container mx-auto px-6">
@@ -766,7 +763,6 @@
               Choose the plan that works best for you.
             </p>
           </div>
-
           <div class="flex flex-col lg:flex-row gap-8 max-w-5xl mx-auto">
             <!-- Free Plan -->
             <div
@@ -834,7 +830,6 @@
                 >Get Started</a
               >
             </div>
-
             <!-- Premium Plan -->
             <div
               class="flex-1 bg-white rounded-lg p-8 border-2 border-primary shadow-md relative"
@@ -906,7 +901,6 @@
                 >Start 7-Day Free Trial</a
               >
             </div>
-
             <!-- Annual Plan -->
             <div
               class="flex-1 bg-white rounded-lg p-8 border border-gray-200 shadow-sm"
@@ -975,7 +969,6 @@
               >
             </div>
           </div>
-
           <div class="mt-12 text-center">
             <p class="text-gray-600">
               All plans come with a 30-day money-back guarantee. No questions
@@ -984,7 +977,6 @@
           </div>
         </div>
       </section>
-
       <!-- CTA Section -->
       <section class="py-20 bg-gradient-to-r from-primary/10 to-secondary/10">
         <div class="container mx-auto px-6 text-center">
@@ -1007,7 +999,6 @@
               >Watch Demo</a
             >
           </div>
-
           <div class="flex justify-center space-x-6">
             <a
               href="#"
@@ -1032,7 +1023,6 @@
           </div>
         </div>
       </section>
-
       <!-- Footer -->
       <footer class="bg-gray-900 text-white pt-16 pb-8">
         <div class="container mx-auto px-6">
@@ -1077,7 +1067,6 @@
                 </a>
               </div>
             </div>
-
             <!-- Quick Links -->
             <div>
               <h4 class="text-lg font-semibold mb-4">Quick Links</h4>
@@ -1126,7 +1115,6 @@
                 </li>
               </ul>
             </div>
-
             <!-- Legal -->
             <div>
               <h4 class="text-lg font-semibold mb-4">Legal</h4>
@@ -1168,7 +1156,6 @@
                 </li>
               </ul>
             </div>
-
             <!-- Newsletter -->
             <div>
               <h4 class="text-lg font-semibold mb-4">Stay Updated</h4>
@@ -1194,7 +1181,6 @@
               </p>
             </div>
           </div>
-
           <div class="border-t border-gray-800 pt-8">
             <div class="flex flex-col md:flex-row justify-between items-center">
               <p class="text-gray-500 text-sm mb-4 md:mb-0">
@@ -1213,12 +1199,10 @@
         </div>
       </footer>
     </div>
-
     <script id="preloader-script">
       document.addEventListener("DOMContentLoaded", function () {
         const preloader = document.querySelector(".preloader");
         const content = document.querySelector(".content");
-
         // Show preloader for 10 seconds (matching the animation duration)
         setTimeout(function () {
           preloader.classList.add("hidden");
@@ -1226,11 +1210,9 @@
         }, 10000);
       });
     </script>
-
     <script id="header-scroll-script">
       document.addEventListener("DOMContentLoaded", function () {
         const header = document.querySelector(".header");
-
         window.addEventListener("scroll", function () {
           if (window.scrollY > 50) {
             header.classList.add("scrolled");
@@ -1240,18 +1222,14 @@
         });
       });
     </script>
-
     <script id="smooth-scroll-script">
       document.addEventListener("DOMContentLoaded", function () {
         const links = document.querySelectorAll('a[href^="#"]');
-
         for (const link of links) {
           link.addEventListener("click", function (e) {
             e.preventDefault();
-
             const targetId = this.getAttribute("href");
             if (targetId === "#") return;
-
             const targetElement = document.querySelector(targetId);
             if (targetElement) {
               window.scrollTo({
