@@ -1,51 +1,1267 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>KLTO | Welcome</title>
-  <style>
-    body {
-      margin: 0;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background: linear-gradient(to right, #1e3c72, #2a5298);
-      color: #fff;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-      text-align: center;
-    }
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Klto - Your Personal Life Tracker</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.6.0/remixicon.min.css"
+      rel="stylesheet"
+    />
+    <script src="https://cdn.tailwindcss.com/3.4.16"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: { primary: "#8B5CF6", secondary: "#EC4899" },
+            borderRadius: {
+              none: "0px",
+              sm: "4px",
+              DEFAULT: "8px",
+              md: "12px",
+              lg: "16px",
+              xl: "20px",
+              "2xl": "24px",
+              "3xl": "32px",
+              full: "9999px",
+              button: "8px",
+            },
+          },
+        },
+      };
+    </script>
+    <style>
+      :where([class^="ri-"])::before { content: "\f3c2"; }
 
-    .container {
-      max-width: 600px;
-      padding: 2rem;
-      background: rgba(0, 0, 0, 0.3);
-      border-radius: 20px;
-      box-shadow: 0 8px 20px rgba(0,0,0,0.4);
-    }
+      @keyframes fadeIn {
+          from { opacity: 0; }
+          to { opacity: 1; }
+      }
 
-    h1 {
-      font-size: 3rem;
-      margin-bottom: 0.5rem;
-    }
+      @keyframes fadeOut {
+          from { opacity: 1; }
+          to { opacity: 0; }
+      }
 
-    p {
-      font-size: 1.2rem;
-    }
+      @keyframes pulse {
+          0% { transform: scale(1); }
+          50% { transform: scale(1.05); }
+          100% { transform: scale(1); }
+      }
 
-    .logo {
-      font-size: 4rem;
-      margin-bottom: 1rem;
-      color: #ffd700;
-    }
-  </style>
-</head>
-<body>
-  <div class="container">
-    <div class="logo">🚀</div>
-    <h1>Hello from KLTO!</h1>
-    <p>Welcome to klto, one project at a time.</p>
-  </div>
-</body>
+      @keyframes progressBar {
+          from { width: 0; }
+          to { width: 100%; }
+      }
+
+      .preloader {
+          position: fixed;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          background: linear-gradient(135deg, #f5f7fa 0%, #eef1f5 100%);
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+          z-index: 9999;
+      }
+
+      .preloader.hidden {
+          animation: fadeOut 0.5s forwards;
+          pointer-events: none;
+      }
+
+      .progress-bar {
+          width: 200px;
+          height: 4px;
+          background-color: rgba(139, 92, 246, 0.2);
+          border-radius: 2px;
+          margin-top: 20px;
+          overflow: hidden;
+      }
+
+      .progress {
+          height: 100%;
+          background-color: #8B5CF6;
+          animation: progressBar 10s linear forwards;
+      }
+
+      .content {
+          opacity: 0;
+      }
+
+      .content.visible {
+          animation: fadeIn 0.5s forwards;
+      }
+
+      .tracker-card:hover {
+          transform: translateY(-5px);
+          box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+      }
+
+      .header {
+          transition: background-color 0.3s ease;
+      }
+
+      .header.scrolled {
+          background-color: white;
+          box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+      }
+
+      .nav-link {
+          position: relative;
+      }
+
+      .nav-link::after {
+          content: '';
+          position: absolute;
+          bottom: -4px;
+          left: 0;
+          width: 0;
+          height: 2px;
+          background-color: #8B5CF6;
+          transition: width 0.3s ease;
+      }
+
+      .nav-link:hover::after {
+          width: 100%;
+      }
+
+      .custom-checkbox {
+          appearance: none;
+          -webkit-appearance: none;
+          width: 20px;
+          height: 20px;
+          border: 2px solid #8B5CF6;
+          border-radius: 4px;
+          outline: none;
+          cursor: pointer;
+          position: relative;
+      }
+
+      .custom-checkbox:checked {
+          background-color: #8B5CF6;
+      }
+
+      .custom-checkbox:checked::after {
+          content: '';
+          position: absolute;
+          top: 2px;
+          left: 6px;
+          width: 5px;
+          height: 10px;
+          border: solid white;
+          border-width: 0 2px 2px 0;
+          transform: rotate(45deg);
+      }
+    </style>
+  </head>
+  <body class="font-sans antialiased text-gray-800">
+    <!-- Preloader -->
+    <div class="preloader">
+      <div class="text-5xl font-['Pacifico'] text-primary animate-pulse">
+        Klto
+      </div>
+      <div class="mt-4 text-gray-600">Your personal life tracker</div>
+      <div class="progress-bar">
+        <div class="progress"></div>
+      </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="content">
+      <!-- Header -->
+      <header class="header fixed w-full z-50 px-6 py-4">
+        <div class="container mx-auto flex justify-between items-center">
+          <a href="#" class="text-3xl font-['Pacifico'] text-primary">Klto</a>
+
+          <nav class="hidden md:flex items-center space-x-8">
+            <a
+              href="#features"
+              class="nav-link text-gray-700 hover:text-primary transition-colors"
+              >Features</a
+            >
+            <a
+              href="#trackers"
+              class="nav-link text-gray-700 hover:text-primary transition-colors"
+              >Trackers</a
+            >
+            <a
+              href="#testimonials"
+              class="nav-link text-gray-700 hover:text-primary transition-colors"
+              >Testimonials</a
+            >
+            <a
+              href="#pricing"
+              class="nav-link text-gray-700 hover:text-primary transition-colors"
+              >Pricing</a
+            >
+          </nav>
+
+          <div class="flex items-center space-x-4">
+            <a
+              href="#"
+              class="px-4 py-2 text-primary border border-primary !rounded-button hover:bg-primary hover:text-white transition-colors whitespace-nowrap"
+              >Log In</a
+            >
+            <a
+              href="#"
+              class="px-4 py-2 bg-primary text-white !rounded-button hover:bg-primary/90 transition-colors whitespace-nowrap"
+              >Sign Up</a
+            >
+
+            <button
+              class="md:hidden w-10 h-10 flex items-center justify-center text-gray-700"
+            >
+              <i class="ri-menu-line ri-lg"></i>
+            </button>
+          </div>
+        </div>
+      </header>
+
+      <!-- Hero Section -->
+      <section
+        class="relative pt-24 overflow-hidden"
+        style="background-image: url('https://readdy.ai/api/search-image?query=A%20modern%2C%20clean%20and%20minimal%20app%20interface%20with%20floating%20UI%20elements%2C%20showing%20various%20life%20tracking%20features.%20The%20image%20has%20a%20soft%20gradient%20background%20transitioning%20from%20light%20purple%20to%20soft%20pink%20on%20the%20right%20side%2C%20leaving%20space%20for%20text%20on%20the%20left.%20The%20design%20is%20elegant%20and%20feminine%20with%20subtle%20geometric%20patterns.&width=1920&height=1080&seq=hero1&orientation=landscape'); background-size: cover; background-position: center right;"
+      >
+        <div class="container mx-auto px-6 py-24 md:py-32">
+          <div class="w-full max-w-xl">
+            <h1
+              class="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 leading-tight text-gray-900"
+            >
+              Track Your Life Journey with Elegance
+            </h1>
+            <p class="text-lg md:text-xl text-gray-700 mb-8">
+              Klto helps you monitor what matters most - from periods and
+              expenses to screen time and personal goals - all in one
+              beautifully designed app.
+            </p>
+            <div class="flex flex-col sm:flex-row gap-4">
+              <a
+                href="#"
+                class="px-8 py-3 bg-primary text-white text-lg !rounded-button hover:bg-primary/90 transition-colors whitespace-nowrap text-center"
+                >Start Tracking Free</a
+              >
+              <a
+                href="#features"
+                class="px-8 py-3 border border-gray-300 text-gray-700 text-lg !rounded-button hover:bg-gray-50 transition-colors whitespace-nowrap text-center"
+                >Learn More</a
+              >
+            </div>
+          </div>
+        </div>
+        <div
+          class="absolute bottom-0 left-0 w-full h-16 bg-gradient-to-t from-white to-transparent"
+        ></div>
+      </section>
+
+      <!-- Trackers Showcase -->
+      <section id="trackers" class="py-20 bg-white">
+        <div class="container mx-auto px-6">
+          <div class="text-center mb-16">
+            <h2 class="text-3xl md:text-4xl font-bold mb-4">
+              Nine Essential Life Trackers
+            </h2>
+            <p class="text-lg text-gray-600 max-w-2xl mx-auto">
+              Everything you need to monitor and improve your daily life,
+              beautifully organized in one place.
+            </p>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <!-- Period Tracker -->
+            <div
+              class="tracker-card bg-white rounded-lg p-6 border border-gray-100 shadow-sm hover:shadow-md transition-all duration-300"
+            >
+              <div
+                class="w-14 h-14 bg-pink-100 rounded-full flex items-center justify-center mb-4"
+              >
+                <i class="ri-calendar-check-line ri-xl text-pink-500"></i>
+              </div>
+              <h3 class="text-xl font-semibold mb-2">Period Tracker</h3>
+              <p class="text-gray-600">
+                Track your cycle, symptoms, and predictions with our intuitive
+                period calendar. Get reminders and insights about your menstrual
+                health.
+              </p>
+            </div>
+
+            <!-- Expenditure Tracker -->
+            <div
+              class="tracker-card bg-white rounded-lg p-6 border border-gray-100 shadow-sm hover:shadow-md transition-all duration-300"
+            >
+              <div
+                class="w-14 h-14 bg-green-100 rounded-full flex items-center justify-center mb-4"
+              >
+                <i class="ri-money-dollar-circle-line ri-xl text-green-500"></i>
+              </div>
+              <h3 class="text-xl font-semibold mb-2">Expenditure Tracker</h3>
+              <p class="text-gray-600">
+                Monitor your spending habits, set budgets, and visualize your
+                financial health with easy-to-understand charts and reports.
+              </p>
+            </div>
+
+            <!-- Screen Time Tracker -->
+            <div
+              class="tracker-card bg-white rounded-lg p-6 border border-gray-100 shadow-sm hover:shadow-md transition-all duration-300"
+            >
+              <div
+                class="w-14 h-14 bg-blue-100 rounded-full flex items-center justify-center mb-4"
+              >
+                <i class="ri-smartphone-line ri-xl text-blue-500"></i>
+              </div>
+              <h3 class="text-xl font-semibold mb-2">Screen Time Tracker</h3>
+              <p class="text-gray-600">
+                Understand your digital habits with detailed screen time
+                analytics. Set healthy limits and reduce digital distractions.
+              </p>
+            </div>
+
+            <!-- Working Tracker -->
+            <div
+              class="tracker-card bg-white rounded-lg p-6 border border-gray-100 shadow-sm hover:shadow-md transition-all duration-300"
+            >
+              <div
+                class="w-14 h-14 bg-purple-100 rounded-full flex items-center justify-center mb-4"
+              >
+                <i class="ri-briefcase-line ri-xl text-purple-500"></i>
+              </div>
+              <h3 class="text-xl font-semibold mb-2">Working Tracker</h3>
+              <p class="text-gray-600">
+                Track your work hours, projects, and productivity. Identify your
+                most productive times and optimize your work schedule.
+              </p>
+            </div>
+
+            <!-- Travel Tracker -->
+            <div
+              class="tracker-card bg-white rounded-lg p-6 border border-gray-100 shadow-sm hover:shadow-md transition-all duration-300"
+            >
+              <div
+                class="w-14 h-14 bg-yellow-100 rounded-full flex items-center justify-center mb-4"
+              >
+                <i class="ri-flight-takeoff-line ri-xl text-yellow-500"></i>
+              </div>
+              <h3 class="text-xl font-semibold mb-2">Travel Tracker</h3>
+              <p class="text-gray-600">
+                Document your journeys, save travel memories, and plan future
+                adventures. Keep all your travel information organized.
+              </p>
+            </div>
+
+            <!-- Study Tracker -->
+            <div
+              class="tracker-card bg-white rounded-lg p-6 border border-gray-100 shadow-sm hover:shadow-md transition-all duration-300"
+            >
+              <div
+                class="w-14 h-14 bg-indigo-100 rounded-full flex items-center justify-center mb-4"
+              >
+                <i class="ri-book-open-line ri-xl text-indigo-500"></i>
+              </div>
+              <h3 class="text-xl font-semibold mb-2">Study Tracker</h3>
+              <p class="text-gray-600">
+                Monitor your learning progress, study sessions, and educational
+                goals. Stay motivated with achievement milestones.
+              </p>
+            </div>
+
+            <!-- Notes -->
+            <div
+              class="tracker-card bg-white rounded-lg p-6 border border-gray-100 shadow-sm hover:shadow-md transition-all duration-300"
+            >
+              <div
+                class="w-14 h-14 bg-teal-100 rounded-full flex items-center justify-center mb-4"
+              >
+                <i class="ri-sticky-note-line ri-xl text-teal-500"></i>
+              </div>
+              <h3 class="text-xl font-semibold mb-2">Notes</h3>
+              <p class="text-gray-600">
+                Capture your thoughts, ideas, and inspirations in one secure
+                place. Organize with tags and search with ease.
+              </p>
+            </div>
+
+            <!-- To-Do List -->
+            <div
+              class="tracker-card bg-white rounded-lg p-6 border border-gray-100 shadow-sm hover:shadow-md transition-all duration-300"
+            >
+              <div
+                class="w-14 h-14 bg-red-100 rounded-full flex items-center justify-center mb-4"
+              >
+                <i class="ri-checkbox-multiple-line ri-xl text-red-500"></i>
+              </div>
+              <h3 class="text-xl font-semibold mb-2">To-Do List</h3>
+              <p class="text-gray-600">
+                Manage your tasks efficiently with our intuitive to-do list. Set
+                priorities, deadlines, and track your progress.
+              </p>
+            </div>
+
+            <!-- Diary -->
+            <div
+              class="tracker-card bg-white rounded-lg p-6 border border-gray-100 shadow-sm hover:shadow-md transition-all duration-300"
+            >
+              <div
+                class="w-14 h-14 bg-orange-100 rounded-full flex items-center justify-center mb-4"
+              >
+                <i class="ri-book-mark-line ri-xl text-orange-500"></i>
+              </div>
+              <h3 class="text-xl font-semibold mb-2">Diary</h3>
+              <p class="text-gray-600">
+                Document your daily experiences, emotions, and reflections.
+                Create a beautiful digital journal of your life journey.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Features Section -->
+      <section id="features" class="py-20 bg-gray-50">
+        <div class="container mx-auto px-6">
+          <div class="text-center mb-16">
+            <h2 class="text-3xl md:text-4xl font-bold mb-4">Why Choose Klto</h2>
+            <p class="text-lg text-gray-600 max-w-2xl mx-auto">
+              Designed with care to help you track what matters most in your
+              life.
+            </p>
+          </div>
+
+          <!-- Feature 1 -->
+          <div class="flex flex-col md:flex-row items-center mb-20">
+            <div class="md:w-1/2 md:pr-12 mb-8 md:mb-0">
+              <h3 class="text-2xl font-bold mb-4">All-in-One Life Tracking</h3>
+              <p class="text-gray-600 mb-6">
+                No more juggling between multiple apps. Klto brings together
+                nine essential trackers in one beautiful, intuitive interface,
+                saving you time and reducing digital clutter.
+              </p>
+              <ul class="space-y-3">
+                <li class="flex items-start">
+                  <div
+                    class="w-6 h-6 mr-2 flex items-center justify-center text-primary"
+                  >
+                    <i class="ri-check-line ri-lg"></i>
+                  </div>
+                  <span>Seamlessly switch between different trackers</span>
+                </li>
+                <li class="flex items-start">
+                  <div
+                    class="w-6 h-6 mr-2 flex items-center justify-center text-primary"
+                  >
+                    <i class="ri-check-line ri-lg"></i>
+                  </div>
+                  <span>Unified dashboard for all your tracking needs</span>
+                </li>
+                <li class="flex items-start">
+                  <div
+                    class="w-6 h-6 mr-2 flex items-center justify-center text-primary"
+                  >
+                    <i class="ri-check-line ri-lg"></i>
+                  </div>
+                  <span>Cross-tracker insights for better life management</span>
+                </li>
+              </ul>
+            </div>
+            <div class="md:w-1/2">
+              <img
+                src="https://readdy.ai/api/search-image?query=A%20beautiful%2C%20modern%20app%20dashboard%20showing%20multiple%20tracking%20widgets%20arranged%20in%20a%20clean%20layout.%20The%20interface%20is%20elegant%20with%20soft%20colors%2C%20showing%20period%20calendar%2C%20expense%20charts%2C%20and%20to-do%20lists.%20The%20design%20is%20minimal%20and%20feminine%20with%20excellent%20typography%20and%20spacing.&width=600&height=400&seq=feature1&orientation=landscape"
+                alt="All-in-One Dashboard"
+                class="rounded-lg shadow-lg w-full"
+              />
+            </div>
+          </div>
+
+          <!-- Feature 2 -->
+          <div class="flex flex-col md:flex-row-reverse items-center mb-20">
+            <div class="md:w-1/2 md:pl-12 mb-8 md:mb-0">
+              <h3 class="text-2xl font-bold mb-4">
+                Personalized Insights & Reminders
+              </h3>
+              <p class="text-gray-600 mb-6">
+                Klto learns from your patterns and provides meaningful insights
+                to help you make better decisions. Get gentle reminders and
+                suggestions tailored to your unique lifestyle.
+              </p>
+              <ul class="space-y-3">
+                <li class="flex items-start">
+                  <div
+                    class="w-6 h-6 mr-2 flex items-center justify-center text-primary"
+                  >
+                    <i class="ri-check-line ri-lg"></i>
+                  </div>
+                  <span>AI-powered pattern recognition</span>
+                </li>
+                <li class="flex items-start">
+                  <div
+                    class="w-6 h-6 mr-2 flex items-center justify-center text-primary"
+                  >
+                    <i class="ri-check-line ri-lg"></i>
+                  </div>
+                  <span>Customizable notification preferences</span>
+                </li>
+                <li class="flex items-start">
+                  <div
+                    class="w-6 h-6 mr-2 flex items-center justify-center text-primary"
+                  >
+                    <i class="ri-check-line ri-lg"></i>
+                  </div>
+                  <span>Actionable suggestions for improvement</span>
+                </li>
+              </ul>
+            </div>
+            <div class="md:w-1/2">
+              <img
+                src="https://readdy.ai/api/search-image?query=A%20smartphone%20showing%20personalized%20insights%20and%20notification%20screens%20from%20a%20life%20tracking%20app.%20The%20interface%20displays%20elegant%20charts%2C%20prediction%20graphs%20for%20period%20tracking%2C%20and%20gentle%20reminder%20notifications.%20The%20design%20is%20modern%20with%20soft%20purple%20and%20pink%20accents%2C%20showing%20data%20visualization%20in%20a%20clean%2C%20feminine%20style.&width=600&height=400&seq=feature2&orientation=landscape"
+                alt="Personalized Insights"
+                class="rounded-lg shadow-lg w-full"
+              />
+            </div>
+          </div>
+
+          <!-- Feature 3 -->
+          <div class="flex flex-col md:flex-row items-center">
+            <div class="md:w-1/2 md:pr-12 mb-8 md:mb-0">
+              <h3 class="text-2xl font-bold mb-4">
+                Beautiful Visualization & Reports
+              </h3>
+              <p class="text-gray-600 mb-6">
+                Transform your data into beautiful, easy-to-understand
+                visualizations. Klto's elegant reports help you see patterns and
+                progress at a glance.
+              </p>
+              <ul class="space-y-3">
+                <li class="flex items-start">
+                  <div
+                    class="w-6 h-6 mr-2 flex items-center justify-center text-primary"
+                  >
+                    <i class="ri-check-line ri-lg"></i>
+                  </div>
+                  <span>Intuitive charts and graphs</span>
+                </li>
+                <li class="flex items-start">
+                  <div
+                    class="w-6 h-6 mr-2 flex items-center justify-center text-primary"
+                  >
+                    <i class="ri-check-line ri-lg"></i>
+                  </div>
+                  <span>Weekly and monthly summary reports</span>
+                </li>
+                <li class="flex items-start">
+                  <div
+                    class="w-6 h-6 mr-2 flex items-center justify-center text-primary"
+                  >
+                    <i class="ri-check-line ri-lg"></i>
+                  </div>
+                  <span>Export options for your records</span>
+                </li>
+              </ul>
+            </div>
+            <div class="md:w-1/2">
+              <img
+                src="https://readdy.ai/api/search-image?query=Beautiful%20data%20visualization%20screens%20from%20a%20life%20tracking%20app%20showing%20elegant%20charts%2C%20graphs%2C%20and%20reports.%20The%20interface%20displays%20expense%20tracking%20pie%20charts%2C%20period%20cycle%20predictions%2C%20and%20screen%20time%20analytics%20with%20a%20modern%2C%20clean%20design.%20The%20color%20scheme%20is%20soft%20with%20purple%20and%20pink%20accents%2C%20and%20the%20layout%20is%20spacious%20and%20easy%20to%20read.&width=600&height=400&seq=feature3&orientation=landscape"
+                alt="Beautiful Visualizations"
+                class="rounded-lg shadow-lg w-full"
+              />
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Testimonials Section -->
+      <section id="testimonials" class="py-20 bg-white">
+        <div class="container mx-auto px-6">
+          <div class="text-center mb-16">
+            <h2 class="text-3xl md:text-4xl font-bold mb-4">
+              What Our Users Say
+            </h2>
+            <p class="text-lg text-gray-600 max-w-2xl mx-auto">
+              Join thousands of women who are transforming their lives with
+              Klto.
+            </p>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <!-- Testimonial 1 -->
+            <div
+              class="bg-white rounded-lg p-6 shadow-sm border border-gray-100"
+            >
+              <div class="flex items-center mb-4">
+                <div class="text-primary">
+                  <i class="ri-star-fill ri-lg"></i>
+                  <i class="ri-star-fill ri-lg"></i>
+                  <i class="ri-star-fill ri-lg"></i>
+                  <i class="ri-star-fill ri-lg"></i>
+                  <i class="ri-star-fill ri-lg"></i>
+                </div>
+              </div>
+              <p class="text-gray-600 mb-6">
+                "Klto has completely changed how I manage my life. The period
+                tracker is incredibly accurate, and I love how it connects with
+                my mood and productivity data. It's like having a personal
+                assistant who really understands me."
+              </p>
+              <div class="flex items-center">
+                <div
+                  class="w-10 h-10 bg-gray-200 rounded-full flex items-center justify-center mr-3"
+                >
+                  <i class="ri-user-line text-gray-500"></i>
+                </div>
+                <div>
+                  <h4 class="font-medium">Olivia Bennett</h4>
+                  <p class="text-sm text-gray-500">Marketing Director, 34</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Testimonial 2 -->
+            <div
+              class="bg-white rounded-lg p-6 shadow-sm border border-gray-100"
+            >
+              <div class="flex items-center mb-4">
+                <div class="text-primary">
+                  <i class="ri-star-fill ri-lg"></i>
+                  <i class="ri-star-fill ri-lg"></i>
+                  <i class="ri-star-fill ri-lg"></i>
+                  <i class="ri-star-fill ri-lg"></i>
+                  <i class="ri-star-fill ri-lg"></i>
+                </div>
+              </div>
+              <p class="text-gray-600 mb-6">
+                "As a medical student, I need to track both my study hours and
+                my health. Klto does both beautifully. The interface is so
+                intuitive, and I love how I can see correlations between my
+                screen time, study habits, and overall wellbeing."
+              </p>
+              <div class="flex items-center">
+                <div
+                  class="w-10 h-10 bg-gray-200 rounded-full flex items-center justify-center mr-3"
+                >
+                  <i class="ri-user-line text-gray-500"></i>
+                </div>
+                <div>
+                  <h4 class="font-medium">Sophia Rodriguez</h4>
+                  <p class="text-sm text-gray-500">Medical Student, 26</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Testimonial 3 -->
+            <div
+              class="bg-white rounded-lg p-6 shadow-sm border border-gray-100"
+            >
+              <div class="flex items-center mb-4">
+                <div class="text-primary">
+                  <i class="ri-star-fill ri-lg"></i>
+                  <i class="ri-star-fill ri-lg"></i>
+                  <i class="ri-star-fill ri-lg"></i>
+                  <i class="ri-star-fill ri-lg"></i>
+                  <i class="ri-star-half-line ri-lg"></i>
+                </div>
+              </div>
+              <p class="text-gray-600 mb-6">
+                "The expenditure tracker alone has saved me so much money! Being
+                able to see my spending patterns alongside my mood and
+                activities has been eye-opening. Plus, the diary feature helps
+                me reflect on my relationship with money."
+              </p>
+              <div class="flex items-center">
+                <div
+                  class="w-10 h-10 bg-gray-200 rounded-full flex items-center justify-center mr-3"
+                >
+                  <i class="ri-user-line text-gray-500"></i>
+                </div>
+                <div>
+                  <h4 class="font-medium">Emma Thompson</h4>
+                  <p class="text-sm text-gray-500">Financial Analyst, 29</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- App Store Ratings -->
+          <div
+            class="mt-16 flex flex-col md:flex-row items-center justify-center gap-8 md:gap-16"
+          >
+            <div class="text-center">
+              <div class="text-4xl font-bold text-primary mb-2">4.8</div>
+              <div class="flex justify-center text-primary mb-2">
+                <i class="ri-star-fill ri-lg"></i>
+                <i class="ri-star-fill ri-lg"></i>
+                <i class="ri-star-fill ri-lg"></i>
+                <i class="ri-star-fill ri-lg"></i>
+                <i class="ri-star-half-line ri-lg"></i>
+              </div>
+              <p class="text-gray-600">App Store</p>
+              <p class="text-sm text-gray-500">12,000+ reviews</p>
+            </div>
+
+            <div class="text-center">
+              <div class="text-4xl font-bold text-primary mb-2">4.7</div>
+              <div class="flex justify-center text-primary mb-2">
+                <i class="ri-star-fill ri-lg"></i>
+                <i class="ri-star-fill ri-lg"></i>
+                <i class="ri-star-fill ri-lg"></i>
+                <i class="ri-star-fill ri-lg"></i>
+                <i class="ri-star-half-line ri-lg"></i>
+              </div>
+              <p class="text-gray-600">Google Play</p>
+              <p class="text-sm text-gray-500">9,500+ reviews</p>
+            </div>
+
+            <div class="text-center">
+              <div class="text-4xl font-bold text-primary mb-2">98%</div>
+              <div class="flex justify-center text-primary mb-2">
+                <i class="ri-thumb-up-fill ri-lg"></i>
+              </div>
+              <p class="text-gray-600">User Satisfaction</p>
+              <p class="text-sm text-gray-500">Based on surveys</p>
+            </div>
+          </div>
+
+          <!-- Featured In -->
+          <div class="mt-16">
+            <p class="text-center text-gray-500 mb-8">Featured In</p>
+            <div
+              class="flex flex-wrap justify-center items-center gap-8 md:gap-16"
+            >
+              <div class="flex items-center text-gray-400">
+                <i class="ri-medium-line ri-2x"></i>
+                <span class="ml-2 text-lg font-semibold">Medium</span>
+              </div>
+              <div class="flex items-center text-gray-400">
+                <i class="ri-product-hunt-line ri-2x"></i>
+                <span class="ml-2 text-lg font-semibold">Product Hunt</span>
+              </div>
+              <div class="flex items-center text-gray-400">
+                <i class="ri-techcrunch-line ri-2x"></i>
+                <span class="ml-2 text-lg font-semibold">TechCrunch</span>
+              </div>
+              <div class="flex items-center text-gray-400">
+                <i class="ri-forbes-line ri-2x"></i>
+                <span class="ml-2 text-lg font-semibold">Forbes</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Pricing Section -->
+      <section id="pricing" class="py-20 bg-gray-50">
+        <div class="container mx-auto px-6">
+          <div class="text-center mb-16">
+            <h2 class="text-3xl md:text-4xl font-bold mb-4">
+              Simple, Transparent Pricing
+            </h2>
+            <p class="text-lg text-gray-600 max-w-2xl mx-auto">
+              Choose the plan that works best for you.
+            </p>
+          </div>
+
+          <div class="flex flex-col lg:flex-row gap-8 max-w-5xl mx-auto">
+            <!-- Free Plan -->
+            <div
+              class="flex-1 bg-white rounded-lg p-8 border border-gray-200 shadow-sm"
+            >
+              <h3 class="text-xl font-bold mb-2">Free</h3>
+              <p class="text-gray-600 mb-6">Perfect for getting started</p>
+              <div class="mb-6">
+                <span class="text-4xl font-bold">$0</span>
+                <span class="text-gray-500">/month</span>
+              </div>
+              <ul class="space-y-3 mb-8">
+                <li class="flex items-start">
+                  <div
+                    class="w-6 h-6 mr-2 flex items-center justify-center text-primary"
+                  >
+                    <i class="ri-check-line"></i>
+                  </div>
+                  <span>Access to all 9 trackers</span>
+                </li>
+                <li class="flex items-start">
+                  <div
+                    class="w-6 h-6 mr-2 flex items-center justify-center text-primary"
+                  >
+                    <i class="ri-check-line"></i>
+                  </div>
+                  <span>Basic visualizations</span>
+                </li>
+                <li class="flex items-start">
+                  <div
+                    class="w-6 h-6 mr-2 flex items-center justify-center text-primary"
+                  >
+                    <i class="ri-check-line"></i>
+                  </div>
+                  <span>3-month data history</span>
+                </li>
+                <li class="flex items-start">
+                  <div
+                    class="w-6 h-6 mr-2 flex items-center justify-center text-gray-300"
+                  >
+                    <i class="ri-close-line"></i>
+                  </div>
+                  <span class="text-gray-400">Advanced insights</span>
+                </li>
+                <li class="flex items-start">
+                  <div
+                    class="w-6 h-6 mr-2 flex items-center justify-center text-gray-300"
+                  >
+                    <i class="ri-close-line"></i>
+                  </div>
+                  <span class="text-gray-400">Data export</span>
+                </li>
+                <li class="flex items-start">
+                  <div
+                    class="w-6 h-6 mr-2 flex items-center justify-center text-gray-300"
+                  >
+                    <i class="ri-close-line"></i>
+                  </div>
+                  <span class="text-gray-400">Ad-free experience</span>
+                </li>
+              </ul>
+              <a
+                href="#"
+                class="block w-full py-3 text-center border border-primary text-primary !rounded-button hover:bg-primary/5 transition-colors whitespace-nowrap"
+                >Get Started</a
+              >
+            </div>
+
+            <!-- Premium Plan -->
+            <div
+              class="flex-1 bg-white rounded-lg p-8 border-2 border-primary shadow-md relative"
+            >
+              <div
+                class="absolute top-0 right-0 bg-primary text-white px-4 py-1 text-sm font-medium rounded-bl-lg rounded-tr-lg"
+              >
+                POPULAR
+              </div>
+              <h3 class="text-xl font-bold mb-2">Premium</h3>
+              <p class="text-gray-600 mb-6">For dedicated life trackers</p>
+              <div class="mb-6">
+                <span class="text-4xl font-bold">$4.99</span>
+                <span class="text-gray-500">/month</span>
+              </div>
+              <ul class="space-y-3 mb-8">
+                <li class="flex items-start">
+                  <div
+                    class="w-6 h-6 mr-2 flex items-center justify-center text-primary"
+                  >
+                    <i class="ri-check-line"></i>
+                  </div>
+                  <span>Everything in Free</span>
+                </li>
+                <li class="flex items-start">
+                  <div
+                    class="w-6 h-6 mr-2 flex items-center justify-center text-primary"
+                  >
+                    <i class="ri-check-line"></i>
+                  </div>
+                  <span>Advanced visualizations</span>
+                </li>
+                <li class="flex items-start">
+                  <div
+                    class="w-6 h-6 mr-2 flex items-center justify-center text-primary"
+                  >
+                    <i class="ri-check-line"></i>
+                  </div>
+                  <span>Unlimited data history</span>
+                </li>
+                <li class="flex items-start">
+                  <div
+                    class="w-6 h-6 mr-2 flex items-center justify-center text-primary"
+                  >
+                    <i class="ri-check-line"></i>
+                  </div>
+                  <span>Personalized insights</span>
+                </li>
+                <li class="flex items-start">
+                  <div
+                    class="w-6 h-6 mr-2 flex items-center justify-center text-primary"
+                  >
+                    <i class="ri-check-line"></i>
+                  </div>
+                  <span>Data export options</span>
+                </li>
+                <li class="flex items-start">
+                  <div
+                    class="w-6 h-6 mr-2 flex items-center justify-center text-primary"
+                  >
+                    <i class="ri-check-line"></i>
+                  </div>
+                  <span>Ad-free experience</span>
+                </li>
+              </ul>
+              <a
+                href="#"
+                class="block w-full py-3 text-center bg-primary text-white !rounded-button hover:bg-primary/90 transition-colors whitespace-nowrap"
+                >Start 7-Day Free Trial</a
+              >
+            </div>
+
+            <!-- Annual Plan -->
+            <div
+              class="flex-1 bg-white rounded-lg p-8 border border-gray-200 shadow-sm"
+            >
+              <h3 class="text-xl font-bold mb-2">Annual</h3>
+              <p class="text-gray-600 mb-6">Best value for committed users</p>
+              <div class="mb-6">
+                <span class="text-4xl font-bold">$39.99</span>
+                <span class="text-gray-500">/year</span>
+                <span class="ml-2 text-sm text-green-600">Save 33%</span>
+              </div>
+              <ul class="space-y-3 mb-8">
+                <li class="flex items-start">
+                  <div
+                    class="w-6 h-6 mr-2 flex items-center justify-center text-primary"
+                  >
+                    <i class="ri-check-line"></i>
+                  </div>
+                  <span>Everything in Premium</span>
+                </li>
+                <li class="flex items-start">
+                  <div
+                    class="w-6 h-6 mr-2 flex items-center justify-center text-primary"
+                  >
+                    <i class="ri-check-line"></i>
+                  </div>
+                  <span>Priority customer support</span>
+                </li>
+                <li class="flex items-start">
+                  <div
+                    class="w-6 h-6 mr-2 flex items-center justify-center text-primary"
+                  >
+                    <i class="ri-check-line"></i>
+                  </div>
+                  <span>Early access to new features</span>
+                </li>
+                <li class="flex items-start">
+                  <div
+                    class="w-6 h-6 mr-2 flex items-center justify-center text-primary"
+                  >
+                    <i class="ri-check-line"></i>
+                  </div>
+                  <span>Exclusive premium themes</span>
+                </li>
+                <li class="flex items-start">
+                  <div
+                    class="w-6 h-6 mr-2 flex items-center justify-center text-primary"
+                  >
+                    <i class="ri-check-line"></i>
+                  </div>
+                  <span>Advanced data correlations</span>
+                </li>
+                <li class="flex items-start">
+                  <div
+                    class="w-6 h-6 mr-2 flex items-center justify-center text-primary"
+                  >
+                    <i class="ri-check-line"></i>
+                  </div>
+                  <span>Family account option (up to 3)</span>
+                </li>
+              </ul>
+              <a
+                href="#"
+                class="block w-full py-3 text-center border border-primary text-primary !rounded-button hover:bg-primary/5 transition-colors whitespace-nowrap"
+                >Choose Annual Plan</a
+              >
+            </div>
+          </div>
+
+          <div class="mt-12 text-center">
+            <p class="text-gray-600">
+              All plans come with a 30-day money-back guarantee. No questions
+              asked.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- CTA Section -->
+      <section class="py-20 bg-gradient-to-r from-primary/10 to-secondary/10">
+        <div class="container mx-auto px-6 text-center">
+          <h2 class="text-3xl md:text-4xl font-bold mb-6">
+            Start Tracking Your Life Journey Today
+          </h2>
+          <p class="text-lg text-gray-700 mb-8 max-w-2xl mx-auto">
+            Join thousands of women who are using Klto to gain insights, improve
+            habits, and live more intentionally.
+          </p>
+          <div class="flex flex-col sm:flex-row justify-center gap-4 mb-12">
+            <a
+              href="#"
+              class="px-8 py-3 bg-primary text-white text-lg !rounded-button hover:bg-primary/90 transition-colors whitespace-nowrap"
+              >Get Started Free</a
+            >
+            <a
+              href="#"
+              class="px-8 py-3 bg-white text-gray-700 text-lg !rounded-button hover:bg-gray-50 transition-colors whitespace-nowrap"
+              >Watch Demo</a
+            >
+          </div>
+
+          <div class="flex justify-center space-x-6">
+            <a
+              href="#"
+              class="flex items-center bg-black text-white px-6 py-3 rounded-lg hover:bg-gray-900 transition-colors"
+            >
+              <i class="ri-apple-fill ri-lg mr-2"></i>
+              <div class="text-left">
+                <div class="text-xs">Download on the</div>
+                <div class="text-sm font-semibold">App Store</div>
+              </div>
+            </a>
+            <a
+              href="#"
+              class="flex items-center bg-black text-white px-6 py-3 rounded-lg hover:bg-gray-900 transition-colors"
+            >
+              <i class="ri-google-play-fill ri-lg mr-2"></i>
+              <div class="text-left">
+                <div class="text-xs">Get it on</div>
+                <div class="text-sm font-semibold">Google Play</div>
+              </div>
+            </a>
+          </div>
+        </div>
+      </section>
+
+      <!-- Footer -->
+      <footer class="bg-gray-900 text-white pt-16 pb-8">
+        <div class="container mx-auto px-6">
+          <div
+            class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12"
+          >
+            <!-- Company Info -->
+            <div>
+              <a
+                href="#"
+                class="text-3xl font-['Pacifico'] text-white mb-4 inline-block"
+                >Klto</a
+              >
+              <p class="text-gray-400 mb-6">
+                Your complete life tracking companion, designed with care for
+                modern women.
+              </p>
+              <div class="flex space-x-4">
+                <a
+                  href="#"
+                  class="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center hover:bg-primary transition-colors"
+                >
+                  <i class="ri-instagram-line"></i>
+                </a>
+                <a
+                  href="#"
+                  class="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center hover:bg-primary transition-colors"
+                >
+                  <i class="ri-twitter-x-line"></i>
+                </a>
+                <a
+                  href="#"
+                  class="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center hover:bg-primary transition-colors"
+                >
+                  <i class="ri-facebook-fill"></i>
+                </a>
+                <a
+                  href="#"
+                  class="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center hover:bg-primary transition-colors"
+                >
+                  <i class="ri-pinterest-line"></i>
+                </a>
+              </div>
+            </div>
+
+            <!-- Quick Links -->
+            <div>
+              <h4 class="text-lg font-semibold mb-4">Quick Links</h4>
+              <ul class="space-y-2">
+                <li>
+                  <a
+                    href="#features"
+                    class="text-gray-400 hover:text-white transition-colors"
+                    >Features</a
+                  >
+                </li>
+                <li>
+                  <a
+                    href="#trackers"
+                    class="text-gray-400 hover:text-white transition-colors"
+                    >Trackers</a
+                  >
+                </li>
+                <li>
+                  <a
+                    href="#pricing"
+                    class="text-gray-400 hover:text-white transition-colors"
+                    >Pricing</a
+                  >
+                </li>
+                <li>
+                  <a
+                    href="#testimonials"
+                    class="text-gray-400 hover:text-white transition-colors"
+                    >Testimonials</a
+                  >
+                </li>
+                <li>
+                  <a
+                    href="#"
+                    class="text-gray-400 hover:text-white transition-colors"
+                    >Blog</a
+                  >
+                </li>
+                <li>
+                  <a
+                    href="#"
+                    class="text-gray-400 hover:text-white transition-colors"
+                    >Help Center</a
+                  >
+                </li>
+              </ul>
+            </div>
+
+            <!-- Legal -->
+            <div>
+              <h4 class="text-lg font-semibold mb-4">Legal</h4>
+              <ul class="space-y-2">
+                <li>
+                  <a
+                    href="#"
+                    class="text-gray-400 hover:text-white transition-colors"
+                    >Privacy Policy</a
+                  >
+                </li>
+                <li>
+                  <a
+                    href="#"
+                    class="text-gray-400 hover:text-white transition-colors"
+                    >Terms of Service</a
+                  >
+                </li>
+                <li>
+                  <a
+                    href="#"
+                    class="text-gray-400 hover:text-white transition-colors"
+                    >Cookie Policy</a
+                  >
+                </li>
+                <li>
+                  <a
+                    href="#"
+                    class="text-gray-400 hover:text-white transition-colors"
+                    >GDPR Compliance</a
+                  >
+                </li>
+                <li>
+                  <a
+                    href="#"
+                    class="text-gray-400 hover:text-white transition-colors"
+                    >Data Security</a
+                  >
+                </li>
+              </ul>
+            </div>
+
+            <!-- Newsletter -->
+            <div>
+              <h4 class="text-lg font-semibold mb-4">Stay Updated</h4>
+              <p class="text-gray-400 mb-4">
+                Subscribe to our newsletter for tips, updates, and exclusive
+                offers.
+              </p>
+              <form class="flex mb-4">
+                <input
+                  type="email"
+                  placeholder="Your email address"
+                  class="px-4 py-2 w-full bg-gray-800 border-none rounded-l-lg focus:outline-none focus:ring-2 focus:ring-primary text-sm"
+                />
+                <button
+                  type="submit"
+                  class="bg-primary px-4 py-2 rounded-r-lg hover:bg-primary/90 transition-colors whitespace-nowrap"
+                >
+                  Subscribe
+                </button>
+              </form>
+              <p class="text-xs text-gray-500">
+                By subscribing, you agree to our Privacy Policy.
+              </p>
+            </div>
+          </div>
+
+          <div class="border-t border-gray-800 pt-8">
+            <div class="flex flex-col md:flex-row justify-between items-center">
+              <p class="text-gray-500 text-sm mb-4 md:mb-0">
+                © 2025 Klto. All rights reserved.
+              </p>
+              <div class="flex space-x-6">
+                <div class="flex items-center text-gray-500">
+                  <i class="ri-visa-line ri-lg mr-1"></i>
+                  <i class="ri-mastercard-line ri-lg mr-1"></i>
+                  <i class="ri-paypal-line ri-lg mr-1"></i>
+                  <i class="ri-apple-fill ri-lg"></i>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </footer>
+    </div>
+
+    <script id="preloader-script">
+      document.addEventListener("DOMContentLoaded", function () {
+        const preloader = document.querySelector(".preloader");
+        const content = document.querySelector(".content");
+
+        // Show preloader for 10 seconds (matching the animation duration)
+        setTimeout(function () {
+          preloader.classList.add("hidden");
+          content.classList.add("visible");
+        }, 10000);
+      });
+    </script>
+
+    <script id="header-scroll-script">
+      document.addEventListener("DOMContentLoaded", function () {
+        const header = document.querySelector(".header");
+
+        window.addEventListener("scroll", function () {
+          if (window.scrollY > 50) {
+            header.classList.add("scrolled");
+          } else {
+            header.classList.remove("scrolled");
+          }
+        });
+      });
+    </script>
+
+    <script id="smooth-scroll-script">
+      document.addEventListener("DOMContentLoaded", function () {
+        const links = document.querySelectorAll('a[href^="#"]');
+
+        for (const link of links) {
+          link.addEventListener("click", function (e) {
+            e.preventDefault();
+
+            const targetId = this.getAttribute("href");
+            if (targetId === "#") return;
+
+            const targetElement = document.querySelector(targetId);
+            if (targetElement) {
+              window.scrollTo({
+                top: targetElement.offsetTop - 80,
+                behavior: "smooth",
+              });
+            }
+          });
+        }
+      });
+    </script>
+  </body>
 </html>
